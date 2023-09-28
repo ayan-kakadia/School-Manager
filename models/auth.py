@@ -1,6 +1,5 @@
 from .base import ObservableModel
 import mysql.connector as mysql
-import os
 import json
 
 
