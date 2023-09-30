@@ -5,6 +5,7 @@ import json
 
 class Auth(ObservableModel):
     def __init__(self) -> None:
+        super().__init__()
         self.is_connected = False
         self.connection = None
         self.start()
