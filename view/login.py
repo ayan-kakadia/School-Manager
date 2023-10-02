@@ -1,6 +1,7 @@
 import helpers
 from config import Config
 import tkinter
+import tkinter.messagebox
 import customtkinter as ctk
 
 
@@ -54,5 +55,9 @@ class LoginView(ctk.CTkFrame):
         Creator.create_button('register-button', placement_args=dict(relx=0.17, rely=0.834, relheight=0.07, relwidth=0.66),
                               fg_color=Config.RED, text='Sign In', font=ctk.CTkFont('@Malgun Gothic', -20, 'bold'),
                               anchor=tkinter.CENTER, hover_color=Config.DARK_RED)
+
+        def login_error(self):
+            tkinter.messagebox.showerror(
+                'LOGIN ERROR', 'An error occured while logging you in.\n Either the credentials are incorrect or empty.')
 
         return Creator

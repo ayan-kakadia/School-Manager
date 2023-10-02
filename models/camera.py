@@ -9,7 +9,7 @@ class Camera(ObservableModel):
     def __init__(self):
         super().__init__()
 
-    def click_picture():
+    def click_picture(self):
         capture = cv.VideoCapture(0, cv.CAP_DSHOW)
         rval = True
         while rval:
@@ -29,7 +29,7 @@ class Camera(ObservableModel):
             if cv.getWindowProperty('EMPLOYEE PHOTO', cv.WND_PROP_VISIBLE) < 1:
                 return None
 
-    def identify_face(face_encodings: dict):
+    def identify_face(self, face_encodings: dict):
         capture = cv.VideoCapture(0, cv.CAP_DSHOW)
         if not capture.isOpened():
             return 'NO CAMERA'

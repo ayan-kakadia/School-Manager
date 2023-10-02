@@ -2,7 +2,7 @@ import os
 from PIL import Image
 import numpy
 import customtkinter as ctk
-import numpy
+import numpy as np
 import face_recognition
 import pickle
 import base64
@@ -28,7 +28,8 @@ def path_2_image(path: str, dimensions: tuple[int, int], rel_path: bool = True, 
             return ctk.CTkImage(Image.open(path), size=(width, height))
         else:
             return ctk.CTkImage(Image.open(path))
-    return Image.open(path)
+    elif type == 'Image':
+        return Image.open(path)
 
 
 def encoding_2_b64(encoding):
@@ -39,7 +40,7 @@ def encoding_2_b64(encoding):
 def photo_2_encoding(frame):
     array_img = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
     encoding_face = face_recognition.face_encodings(array_img)
-    if isinstance(encoding_face,numpy.ndarray) or encoding_face:
+    if isinstance(encoding_face, np.ndarray) or encoding_face:
         return encoding_face[0]
 
 
@@ -54,3 +55,7 @@ def cvt_2_tkinter_img(frame, size: tuple[int, int]):
 def cvt_2_encoding(obj):
     if isinstance(obj, bytes):
         return pickle.loads(base64.b64decode(obj))
+
+
+def image_2_array(image):
+    return np.array(image)

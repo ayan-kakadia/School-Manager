@@ -16,6 +16,7 @@ class Auth(ObservableModel):
             try:
                 self.connection = mysql.connect(user=self.creds.mysql_user, host=self.creds.mysql_host,
                                                 password=self.creds.mysql_pass)
+                self.cursor = self.connection.cursor()
                 self.is_connected = True
             except Exception:
                 pass
