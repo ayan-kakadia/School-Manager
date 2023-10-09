@@ -19,8 +19,8 @@ def abs_path(relative_path: str):
     return os.path.join(base_path, relative_path)
 
 
-def path_2_image(path: str, dimensions: tuple[int, int], rel_path: bool = True, type='CTkImage'):
-    if type == 'CTkImage':
+def path_2_image(path: str, dimensions: tuple[int, int], rel_path: bool = True, type="CTkImage"):
+    if type == "CTkImage":
         height, width = dimensions
         if rel_path:
             path = abs_path(path)
@@ -28,7 +28,7 @@ def path_2_image(path: str, dimensions: tuple[int, int], rel_path: bool = True, 
             return ctk.CTkImage(Image.open(path), size=(width, height))
         else:
             return ctk.CTkImage(Image.open(path))
-    elif type == 'Image':
+    elif type == "Image":
         return Image.open(path)
 
 

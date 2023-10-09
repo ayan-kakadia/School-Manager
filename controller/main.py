@@ -1,4 +1,5 @@
 from .login import LoginController
+from .home import HomeController
 from .entry import EntryController
 
 
@@ -8,6 +9,7 @@ class Controller:
         self.model.auth.start()
         self.view = view
         self.login_controller = LoginController(model, view)
+        self.home_controller = HomeController(model, view)
         self.entry_controller = EntryController(model, view)
 
         self.model.auth.add_event_listener(
@@ -29,7 +31,7 @@ class Controller:
         if not self.model.auth.is_connected:
             self.view.switch('login')
         else:
-            self.view.switch('entry')
+            self.view.switch('home')
             self.model.data.setup_db()
 
         self.view.start()

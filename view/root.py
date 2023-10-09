@@ -9,8 +9,8 @@ class Root(ctk.CTk):
 
         height = 700
         width = 1120
-        start_title = 'School Manager'
-        icon = utils.converters.abs_path('images\icon.ico')
+        start_title = "School Manager"
+        icon = utils.converters.abs_path("images\icon.ico")
 
         self.center_win(height, width)
         self.title(start_title)
@@ -22,4 +22,4 @@ class Root(ctk.CTk):
         screen_height = self.winfo_screenheight()
         screen_width = self.winfo_screenwidth()
         self.geometry(
-            f'{width}x{height}+{int(screen_width/2 - width/2)}+{int(screen_height/2-height/2)}')
+            f"{width}x{height}+{int(screen_width/2 - width/2)}+{int(screen_height/2-height/2)}")

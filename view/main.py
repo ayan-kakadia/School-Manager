@@ -1,6 +1,7 @@
 from .root import Root
 from .login import LoginView
 from .entry import EntryView
+from .home import HomeView
 from tkinter import BOTH, filedialog
 
 
@@ -10,8 +11,9 @@ class View:
         self.frames = {}
         self.cur_frame = None
 
-        self._add_frame(LoginView, 'login')
-        self._add_frame(EntryView, 'entry')
+        self._add_frame(LoginView, "login")
+        self._add_frame(HomeView, "home")
+        self._add_frame(EntryView, "entry")
 
     def _add_frame(self, frame, name):
         self.frames[name] = frame(self.root)
@@ -22,8 +24,8 @@ class View:
         self.frames[name].pack(fill=BOTH, expand=1)
         self.cur_frame = self.frames[name]
 
-    def browse_file(self, master, filetypes=[('Images', ('*.jpg', '*.jpeg', '*.png'))]):
-        return filedialog.askopenfilename(filetypes=filetypes, parent=master, title='BROWSE FILES')
+    def browse_file(self, master, filetypes=[("Images", ("*.jpg", "*.jpeg", "*.png"))]):
+        return filedialog.askopenfilename(filetypes=filetypes, parent=master, title="BROWSE FILES")
 
     def start(self):
         self.root.mainloop()

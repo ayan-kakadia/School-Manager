@@ -46,11 +46,11 @@ class credentials:
     def __init__(self, file: str) -> None:
         self.file = file
         try:
-            with open(file, 'r') as fp:
+            with open(file, "r") as fp:
                 creds = json.load(fp=fp)
-                self.mysql_user = creds.get('MYSQL_USER')
-                self.mysql_pass = creds.get('MYSQL_PASS')
-                self.mysql_host = creds.get('MYSQL_HOST')
+                self.mysql_user = creds.get("MYSQL_USER")
+                self.mysql_pass = creds.get("MYSQL_PASS")
+                self.mysql_host = creds.get("MYSQL_HOST")
         except Exception:
             self.mysql_user = None
             self.mysql_pass = None
@@ -64,5 +64,5 @@ class credentials:
                       "MYSQL_PASS": f"{password}",
                       "MYSQL_HOST": f"{host}"}
 
-        with open(self.file, 'w') as fp:
+        with open(self.file, "w") as fp:
             json.dump(creds_dict, fp=fp)

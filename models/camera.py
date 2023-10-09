@@ -17,22 +17,22 @@ class Camera(ObservableModel):
             frame = utils.frame_func.crop_frame(frame, 384, 354)
             text_pos = [(0, 384), (354, 354)]
             text_image = utils.frame_func.add_text(
-                frame, 'PRESS SPACEBAR TO CLICK PHOTO', position=text_pos)
+                frame, "PRESS SPACEBAR TO CLICK PHOTO", position=text_pos)
             cv.circle(text_image, (177, 177), 150,
                       (255, 255, 255), 2, cv.LINE_AA)
-            cv.imshow('EMPLOYEE PHOTO', text_image)
+            cv.imshow("EMPLOYEE PHOTO", text_image)
             key = cv.waitKey(20)
-            if key == ord(' '):
+            if key == ord(" "):
                 cv.destroyAllWindows()
                 return cv.cvtColor(frame[27:327, 27:327], cv.COLOR_BGR2RGB)
 
-            if cv.getWindowProperty('EMPLOYEE PHOTO', cv.WND_PROP_VISIBLE) < 1:
+            if cv.getWindowProperty("EMPLOYEE PHOTO", cv.WND_PROP_VISIBLE) < 1:
                 return None
 
     def identify_face(self, face_encodings: dict):
         capture = cv.VideoCapture(0, cv.CAP_DSHOW)
         if not capture.isOpened():
-            return 'NO CAMERA'
+            return "NO CAMERA"
         known_encodings = list(face_encodings.values())
         identities = list(face_encodings.keys())
         counter = 0
@@ -68,16 +68,16 @@ class Camera(ObservableModel):
                 else:
                     cv.rectangle(frame, (left-20, top-20),
                                  (right+20, bottom+20), (0, 0, 255), 3)
-                    cv.putText(frame, 'NO MATCH', (left-20, top-30),
+                    cv.putText(frame, "NO MATCH", (left-20, top-30),
                                cv.FONT_HERSHEY_PLAIN, 1, (0, 0, 255))
-            cv.imshow('FACE RECOGNITION', frame)
+            cv.imshow("FACE RECOGNITION", frame)
             key = cv.waitKey(1)
-            if key == ord('q'):
+            if key == ord("q"):
                 capture.release()
                 cv.destroyAllWindows()
                 return None
 
-            if key == ord(' '):
+            if key == ord(" "):
                 capture.release()
                 cv.destroyAllWindows()
                 return gr_no
