@@ -22,7 +22,8 @@ class Controller:
         self.model.data.setup_db()
 
     def connection_failed(self, model):
-        self.view.login.login_error()
+        self.view.show_error(
+            "LOGIN ERROR", "An error occured while logging you in.\n Either the credentials are incorrect or empty.")
 
     def logout(self, model):
         self.view.switch('login')

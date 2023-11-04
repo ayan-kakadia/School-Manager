@@ -55,7 +55,7 @@ class Data(ObservableModel):
         self.auth.cursor.execute(
             "SELECT FIRST_NAME, GR_NO, IMAGE FROM STUDENT_DATA")
         face_encodings = {}
-        for first_name, gr_no, pickle_obj_list in self.db.cursor.fetchall():
+        for first_name, gr_no, pickle_obj_list in self.auth.cursor.fetchall():
             face_encodings[(first_name, gr_no)] = utils.converters.cvt_2_encoding(
                 pickle_obj_list)
 

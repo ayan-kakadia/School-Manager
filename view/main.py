@@ -2,7 +2,7 @@ from .root import Root
 from .login import LoginView
 from .entry import EntryView
 from .home import HomeView
-from tkinter import BOTH, filedialog
+from tkinter import BOTH, filedialog, messagebox
 
 
 class View:
@@ -26,6 +26,9 @@ class View:
 
     def browse_file(self, master, filetypes=[("Images", ("*.jpg", "*.jpeg", "*.png"))]):
         return filedialog.askopenfilename(filetypes=filetypes, parent=master, title="BROWSE FILES")
+
+    def show_error(ErrorName, error):
+        messagebox.showerror(ErrorName, error)
 
     def start(self):
         self.root.mainloop()
