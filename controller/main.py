@@ -18,6 +18,9 @@ class Controller:
             "connection_failed", self.connection_failed)
         self.model.auth.add_event_listener("logout", self.logout)
 
+        self.model.data.add_event_listener(
+            "student_registered", self.student_registered)
+
     def connection_success(self, model):
         self.model.data.setup_db()
 
@@ -26,13 +29,16 @@ class Controller:
             "LOGIN ERROR", "An error occured while logging you in.\n Either the credentials are incorrect or empty.")
 
     def logout(self, model):
-        self.view.switch('login')
+        self.view.switch("login")
+
+    def student_registered(self, model):
+        self.view.switch("home")
 
     def start(self):
         if not self.model.auth.is_connected:
-            self.view.switch('login')
+            self.view.switch("login")
         else:
-            self.view.switch('home')
+            self.view.switch("home")
             self.model.data.setup_db()
 
         self.view.start()

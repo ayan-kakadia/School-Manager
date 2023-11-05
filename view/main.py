@@ -27,7 +27,7 @@ class View:
     def browse_file(self, master, filetypes=[("Images", ("*.jpg", "*.jpeg", "*.png"))]):
         return filedialog.askopenfilename(filetypes=filetypes, parent=master, title="BROWSE FILES")
 
-    def show_error(ErrorName, error):
+    def show_error(self, ErrorName, error):
         messagebox.showerror(ErrorName, error)
 
     def start(self):

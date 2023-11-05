@@ -97,6 +97,7 @@ class EntryController:
         if PhotoEncoding is None:
             self.frame.display_error("face")
             return
-        args["photo"] = PhotoEncoding
+        args["photo_encoding"] = PhotoEncoding
+        args["image"] = self.image
 
         self.model.data.new_student(**args)

@@ -39,6 +39,7 @@ class Auth(ObservableModel):
             self.connection.close()
             self.connection = None
             self.is_connected = False
+        self.creds.delete_creds()
         self.trigger_event("logout")
 
 
@@ -66,3 +67,7 @@ class credentials:
 
         with open(self.file, "w") as fp:
             json.dump(creds_dict, fp=fp)
+
+    def delete_creds(self):
+        with open(self.file, "w") as fp:
+            json.dump({}, fp=fp)

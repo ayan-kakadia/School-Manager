@@ -35,25 +35,38 @@ class Data(ObservableModel):
                                  "LAST_NAME": "VARCHAR (225)", "GENDER": "VARCHAR (6)", "ADDRESS": "VARCHAR (225)",
                                  "PHONE_NUMBER": "VARCHAR (10)", "BIRTH_DATE": "DATE",
                                  "EMAIL": "VARCHAR(225)", "LANGUAGE": "VARCHAR(225)", "CLASS": "VARCHAR(12)",
-                                 "ROLL_NO": "BIGINT", "REMARKS": "VARCHAR(225)", "IMAGE": "LONGBLOB"}
+                                 "ROLL_NO": "BIGINT", "REMARKS": "VARCHAR(225)"}
         self.create_table("STUDENT_DATA", student_table_columns)
+
+        photo_table_columns = {"GR_NO": "INT(225) PRIMARY KEY REFERENCES STUDENT_DATA(GR_NO)", "IMAGE": "LONGBLOB",
+                               "FACE_ENCODING": "LONGBLOB"}
+        self.create_table("PHOTO_DATA", photo_table_columns)
+
         attendance_table_columns = {
             "GR_NO": "INT (225) REFERENCES STUDENT_DATA(GR_NO)", "TIME": "TIME", "DATE": "DATE"}
         self.create_table("STUDENT_ATTENDANCE", attendance_table_columns)
 
-    def new_student(self, first_name=None, last_name=None, gender=None, address=None, phone_no=None, birth_date=None, email=None, language=None, class_=None, roll_no=None, remarks=None, photo=None) -> None:
-        photo_binary = utils.converters.encoding_2_b64(photo)
-        query = """INSERT INTO STUDENT_DATA (FIRST_NAME, LAST_NAME, GENDER, ADDRESS, PHONE_NUMBER, BIRTH_DATE, EMAIL, LANGUAGE, CLASS, ROLL_NO, REMARKS, IMAGE) 
-        VALUES(%s, %s, %s, %s, %s, %s,%s,%s,%s,%s,%s,%s)"""
+    def new_student(self, first_name=None, last_name=None, gender=None, address=None, phone_no=None, birth_date=None, email=None, language=None, class_=None, roll_no=None, remarks=None, photo_encoding=None, image=None) -> None:
+        query = """INSERT INTO STUDENT_DATA (FIRST_NAME, LAST_NAME, GENDER, ADDRESS, PHONE_NUMBER, BIRTH_DATE, EMAIL, LANGUAGE, CLASS, ROLL_NO, REMARKS) 
+        VALUES(%s, %s, %s, %s, %s, %s,%s,%s,%s,%s,%s)"""
         args = (first_name, last_name, gender, address, phone_no, birth_date,
-                email, language, class_, roll_no, remarks, photo_binary)
+                email, language, class_, roll_no, remarks)
         self.auth.cursor.execute(query, args)
+        self.auth.connection.commit()
+
+        encoding_binary = utils.converters.cvt_2_b64(photo_encoding)
+        image_binary = utils.converters.cvt_2_encoding(image)
+        self.auth.cursor.execute(
+            "SELECT GR_NO FROM STUDENT_DATA ORDER BY GR_NO DESC LIMIT 1")
+        gr_no = self.auth.cursor.fetchone()[0]
+        query = "INSERT INTO PHOTO_DATA(GR_NO, IMAGE, FACE_ENCODING) VALUE(%s,%s,%s)"
+        self.auth.cursor.execute(query, (gr_no, image_binary, encoding_binary))
         self.auth.connection.commit()
         self.trigger_event("student_registered")
 
     def get_face_encodings(self):
         self.auth.cursor.execute(
-            "SELECT FIRST_NAME, GR_NO, IMAGE FROM STUDENT_DATA")
+            "SELECT STUDENT_DATA.FIRST_NAME, PHOTO_DATA.GR_NO, PHOTO_DATA.FACE_ENCODING FROM STUDENT_DATA, PHOTO_DATA WHERE STUDENT_DATA.GR_NO = PHOTO_DATA.GR_NO")
         face_encodings = {}
         for first_name, gr_no, pickle_obj_list in self.auth.cursor.fetchall():
             face_encodings[(first_name, gr_no)] = utils.converters.cvt_2_encoding(

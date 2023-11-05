@@ -32,9 +32,9 @@ def path_2_image(path: str, dimensions: tuple[int, int], rel_path: bool = True, 
         return Image.open(path)
 
 
-def encoding_2_b64(encoding):
-    pickled_face = pickle.dumps(encoding)
-    return base64.b64encode(pickled_face)
+def cvt_2_b64(encoding):
+    pickled_obj = pickle.dumps(encoding)
+    return base64.b64encode(pickled_obj)
 
 
 def photo_2_encoding(frame):
