@@ -61,7 +61,7 @@ class Camera(ObservableModel):
                     bottom *= 2
                     right *= 2
                     left *= 2
-                    if id:
+                    if gr_no:
                         cv.rectangle(frame, (left-20, top-20),
                                      (right+20, bottom+20), (0, 255, 0), 3)
                         cv.putText(frame, f"{first_name}, Gr No: {gr_no}", (left-20, top-30),
