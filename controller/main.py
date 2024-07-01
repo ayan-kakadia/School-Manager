@@ -23,6 +23,7 @@ class Controller:
 
     def connection_success(self, model):
         self.model.data.setup_db()
+        self.view.switch("home")
 
     def connection_failed(self, model):
         self.view.show_error(
